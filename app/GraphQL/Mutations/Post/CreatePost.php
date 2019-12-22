@@ -10,6 +10,7 @@ use GraphQL;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Tag;
+use Carbon\Carbon;
 use App\Models\Category;
 use Rebing\GraphQL\Support\UploadType;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -24,16 +25,16 @@ class CreatePost extends Mutation
         'description' => 'A mutation for create a post'
     ];
 
-    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
-    {
-        try {
-            $this->auth = JWTAuth::parseToken()->authenticate();
-        } catch (\Exception $e) {
-            $this->auth = null;
-        }
+    // public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
+    // {
+    //     try {
+    //         $this->auth = JWTAuth::parseToken()->authenticate();
+    //     } catch (\Exception $e) {
+    //         $this->auth = null;
+    //     }
         
-        return (boolean) $this->auth;
-    }
+    //     return (boolean) $this->auth;
+    // }
 
     public function type(): Type
     {
@@ -47,8 +48,7 @@ class CreatePost extends Mutation
                 'name' => 'title',
                 'type' => Type::nonNull(Type::string()),
                 'rules' => [
-                    'required',
-                    'max:50'
+                    'required',                    
                 ]
             ], 
             'slug' => [
@@ -127,10 +127,11 @@ class CreatePost extends Mutation
             $uploadedImage->move($destinationPath, $imageName);
             $image->imagePath = $destinationPath . $imageName;
             $post->image = $imageName;
-        }          
+        }    
         
         $post->save();
         $post->tags()->sync($args['tag_id']);
+
         return $post;
     }
 }

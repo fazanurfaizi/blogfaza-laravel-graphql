@@ -11,6 +11,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Tag;
 use App\Models\Category;
+use Carbon\Carbon;
 use GraphQL\Error\Error;
 use Rebing\GraphQL\Support\UploadType;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -25,16 +26,16 @@ class EditPost extends Mutation
         'description' => 'A mutation for edit a post'
     ];
 
-    // public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
-    // {
-    //     try {
-    //         $this->auth = JWTAuth::parseToken()->authenticate();
-    //     } catch (\Exception $e) {
-    //         $this->auth = null;
-    //     }
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
+    {
+        try {
+            $this->auth = JWTAuth::parseToken()->authenticate();
+        } catch (\Exception $e) {
+            $this->auth = null;
+        }
         
-    //     return (boolean) $this->auth;
-    // }
+        return (boolean) $this->auth;
+    }
 
     public function type(): Type
     {
@@ -126,12 +127,16 @@ class EditPost extends Mutation
 
         $title = isset($args['title']) ? $args['title'] : $post->title;
         $slug = str_slug($title);
+
         $post->title = $title;
         $post->slug = $slug;
         $post->description = isset($args['description']) ? $args['description'] : $post->description;
-        $post->body = isset($args['body']) ? $args['body'] : $post->body;
-        $image = $args['image'];
-        if($image){
+        $post->body = isset($args['body']) ? $args['body'] : $post->body;        
+
+        if(!isset($args['image'])){
+            $post->image = $post->image;
+        } else {
+            $image = $args['image'];
             $uploadedImage = $image;
             $imageName = $post->slug . time() . '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/storage/images/');
@@ -140,9 +145,15 @@ class EditPost extends Mutation
             unlink(public_path('/storage/images/') . $post->image);
             $post->image = $imageName;
         }
+
         $post->category_id = isset($args['category_id']) ? $args['category_id'] : $post->category_id;
+        $post->updated_at = Carbon::now();
         $post->save();
-        $post->tags()->sync($args['tag_id']);
+
+        if(isset($args['tag_id'])){
+            $post->tags()->sync($args['tag_id']);
+        }        
+
         return $post;
     }
 }
