@@ -27,12 +27,12 @@ class PostQuery extends Query
     public function args(): array
     {
         return [
-            'id' => [
-                'name' => 'id',
-                'type' => Type::nonNull(Type::int()),
+            'slug' => [
+                'name' => 'slug',
+                'type' => Type::nonNull(Type::string()),
                 'rules' => [
                     'required',
-                    'exists:posts,id'
+                    'exists:posts,slug'
                 ]
             ]
         ];
@@ -44,7 +44,7 @@ class PostQuery extends Query
         $fields = $getSelectFields();
         $select = $fields->getSelect();
         $with = $fields->getRelations();
-        $post = Post::where('id', '=', $args['id'])->with($with)->select($select)->firstOrFail();        
+        $post = Post::where('slug', '=', $args['slug'])->with($with)->select($select)->firstOrFail();        
         $post->views = $post->views + 1;
         $post->save();
 

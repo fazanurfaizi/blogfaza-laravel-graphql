@@ -19,11 +19,11 @@ class PostsTableSeeder extends Seeder
         $users = User::select('id')->get();
         $categories = Category::select('id')->get();
         $tags = Tag::all();        
-        $images = FIle::allFiles(public_path('storage/images'));
-        $title = $faker->sentence;      
-        $slug = str_slug($title);
+        $images = FIle::allFiles(public_path('storage/images'));        
         
         foreach (range(0, 10) as $value) {
+            $title = $faker->sentence;      
+            $slug = str_slug($title);
             Post::create([
                 'title' => $title,
                 'description' => $faker->sentence,

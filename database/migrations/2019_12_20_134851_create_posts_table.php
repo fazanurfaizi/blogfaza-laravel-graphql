@@ -20,7 +20,9 @@ class CreatePostsTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('slug');
+            $table->unique('slug');            
             $table->string('title');
+            $table->unique('title'); 
             $table->text('description');
             $table->text('body');
             $table->string('image');

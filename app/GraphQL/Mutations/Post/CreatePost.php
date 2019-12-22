@@ -66,8 +66,7 @@ class CreatePost extends Mutation
                 'name' => 'description',
                 'type' => Type::string(),
                 'rules' => [
-                    'sometimes',
-                    'max:100'
+                    'sometimes'                    
                 ]
             ],
             'body' => [
@@ -119,6 +118,7 @@ class CreatePost extends Mutation
         $post->fill($args);
         $post->slug = str_slug($post->title);       
         $post->user_id = $args['user_id'];
+        
         $image = $args['image'];        
         if($image){
             $uploadedImage = $image;
@@ -127,8 +127,10 @@ class CreatePost extends Mutation
             $uploadedImage->move($destinationPath, $imageName);
             $image->imagePath = $destinationPath . $imageName;
             $post->image = $imageName;
-        }                
+        }          
+        
         $post->save();
+        $post->tags()->sync($args['tag_id']);
         return $post;
     }
 }

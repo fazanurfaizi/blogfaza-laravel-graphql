@@ -80,15 +80,19 @@ class EditComment extends Mutation
         $comment = Comment::find($args['id']);
         $user = User::find($args['user_id']);
 
+        if(!$comment){
+            return new Error('Sorry, Comment no found.');
+        }
+
         if(!$user){
-            return new Error('User Not Found');
+            return new Error('User Not Found.');
         }
 
         if($user->id !== $comment->user_id){
-            return new Error('User Not Matches');
+            return new Error('User Not Matches.');
         }
         
-        $comment->body = $args['body'];
+        $comment->body = isset($args['body']) ? $args['body'] : $comment->body;
         $comment->save();
         return $comment;
     }
