@@ -12,10 +12,10 @@ class ImagesSeeder extends Seeder
      */
     public function run()
     {
-        File::cleanDirectory(public_path('images/'));
+        File::cleanDirectory(public_path('storage/images/'));
         $faker = Faker\Factory::create();
         foreach (range(0, 10) as $i) {
-            $faker->image(public_path('images/'), $width = 1024, $height  = 512);
+            $faker->image(public_path('storage/images/'), $width = 1024, $height  = 512);
         }
     }
 }

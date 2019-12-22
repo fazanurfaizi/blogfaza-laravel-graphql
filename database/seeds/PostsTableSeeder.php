@@ -18,8 +18,8 @@ class PostsTableSeeder extends Seeder
         $faker = Faker\Factory::create();
         $users = User::select('id')->get();
         $categories = Category::select('id')->get();
-        $tags = Tag::all();
-        $images = FIle::allFiles(public_path('images'));
+        $tags = Tag::all();        
+        $images = FIle::allFiles(public_path('storage/images'));
         $title = $faker->sentence;      
         $slug = str_slug($title);
         

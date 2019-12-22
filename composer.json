@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2",
         "barryvdh/laravel-cors": "^0.11.4",
+        "ecodev/graphql-upload": "^4.0",
         "fideloper/proxy": "^4.2",
         "intervention/image": "^2.5",
         "laravel/framework": "^6.2",
@@ -17,7 +18,8 @@
         "laravel/tinker": "^2.0",
         "rebing/graphql-laravel": "^4.0",
         "thomaswelton/laravel-gravatar": "^1.2",
-        "tymon/jwt-auth": "dev-develop"
+        "tymon/jwt-auth": "dev-develop",
+        "webonyx/graphql-php": "^0.13.8"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

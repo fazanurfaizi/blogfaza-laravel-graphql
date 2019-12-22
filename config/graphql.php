@@ -102,52 +102,48 @@ return [
         'default' => [
             'query' => [
                 // User
-                'user' => App\GraphQL\Queries\User::class,
-                'users' => App\GraphQL\Queries\Users::class,
-                'paginateUsers' => App\GraphQL\Queries\UsersPerPage::class,
+                'user' => App\GraphQL\Queries\UserQuery::class,
+                'users' => App\GraphQL\Queries\UsersQuery::class,
+                'usersPaginate' => App\GraphQL\Queries\UsersPaginateQuery::class,
 
                 // Category
-                'categories' => App\GraphQL\Queries\Categories::class,
-                'category' => App\GraphQL\Queries\Category::class,
+                'categories' => App\GraphQL\Queries\CategoriesQuery::class,
+                'category' => App\GraphQL\Queries\CategoryQuery::class,
 
                 // Comment
-                'comment' => App\GraphQL\Queries\Comment::class,
-                'comments' => App\GraphQL\Queries\Comments::class,
+                'comment' => App\GraphQL\Queries\CommentQuery::class,
+                'comments' => App\GraphQL\Queries\CommentsQuery::class,
 
                 // Tag
-                'tag' => App\GraphQL\Queries\Tag::class,
-                'tags' => App\GraphQL\Queries\Tags::class,
+                'tag' => App\GraphQL\Queries\TagQuery::class,
+                'tags' => App\GraphQL\Queries\TagsQuery::class,
 
                 // Post
-                'popularPosts' => App\GraphQL\Queries\PopularPosts::class,
-                'post' => App\GraphQL\Queries\Post::class,
-                'posts' => App\GraphQL\Queries\Posts::class,
-                'paginatePost' => App\GraphQL\Queries\PostsPerPage::class, 
+                'popularPosts' => App\GraphQL\Queries\PopularPostsQuery::class,
+                'post' => App\GraphQL\Queries\PostQuery::class,
+                'posts' => App\GraphQL\Queries\PostsQuery::class,
+                'PostsPaginate' => App\GraphQL\Queries\PostsPaginateQuery::class,                
             ],
             'mutation' => [
-                // Auth 
-                'login' => App\GraphQL\Mutations\Auth\Login::class,
-                'register' => App\GraphQL\Mutations\Auth\Register::class,
-
                 // Category
-                'createCategory' => App\GraphQL\Mutations\Category\Create::class,
-                'editCategory' => App\GraphQL\Mutations\Category\Edit::class,
-                'deleteCategory' => App\GraphQL\Mutations\Category\Delete::class,
+                'createCategory' => App\GraphQL\Mutations\Category\CreateCategory::class,
+                'editCategory' => App\GraphQL\Mutations\Category\EditCategory::class,
+                'deleteCategory' => App\GraphQL\Mutations\Category\DeleteCategory::class,
 
                 // Comment
-                'createComment' => App\GraphQL\Mutations\Comment\Create::class,
-                'editComment' => App\GraphQL\Mutations\Comment\Edit::class,
-                'deleteComment' => App\GraphQL\Mutations\Comment\Delete::class,
+                'createComment' => App\GraphQL\Mutations\Comment\CreateComment::class,
+                'editComment' => App\GraphQL\Mutations\Comment\EditComment::class,
+                'deleteComment' => App\GraphQL\Mutations\Comment\DeleteComment::class,
 
                 // Post
-                'createPost' => App\GraphQL\Mutations\Post\Create::class,
-                'editPost' => App\GraphQL\Mutations\Post\Edit::class,
-                'deletePost' => App\GraphQL\Mutations\Post\Delete::class,
+                'createPost' => App\GraphQL\Mutations\Post\CreatePost::class,
+                'editPost' => App\GraphQL\Mutations\Post\EditPost::class,
+                'deletePost' => App\GraphQL\Mutations\Post\DeletePost::class,
 
                 // Tag
-                'createTag' => App\GraphQL\Mutations\Tag\Create::class,
-                'editTag' => App\GraphQL\Mutations\Tag\Edit::class,
-                'deleteTag' => App\GraphQL\Mutations\Tag\Delete::class,
+                'createTag' => App\GraphQL\Mutations\Tag\CreateTag::class,
+                'editTag' => App\GraphQL\Mutations\Tag\EditTag::class,
+                'deleteTag' => App\GraphQL\Mutations\Tag\DeleteTag::class,
             ],
             'middleware' => [],
             'method' => ['get', 'post'],
@@ -164,12 +160,12 @@ return [
     // ]
     //
     'types' => [
-        'User' => App\GraphQL\Types\User::class,
-        'Tag' => App\GraphQL\Types\Tag::class,
-        'Category' => App\GraphQL\Types\Category::class,
-        'Comment' => App\GraphQL\Types\Comment::class,
-        'Post' => App\GraphQL\Types\Post::class,
-        'Upload' => Rebing\GraphQL\Support\Upload::class,
+        'User' => App\GraphQL\Types\UserType::class,
+        'Tag' => App\GraphQL\Types\TagType::class,
+        'Category' => App\GraphQL\Types\CategoryType::class,
+        'Comment' => App\GraphQL\Types\CommentType::class,
+        'Post' => App\GraphQL\Types\PostType::class,
+        \Rebing\GraphQL\Support\UploadType::class,
     ],
 
     // The types will be loaded on demand. Default is to load all types on each request
@@ -184,7 +180,9 @@ return [
     //     'message' => '',
     //     'locations' => []
     // ]
-    'error_formatter' => ['\Rebing\GraphQL\GraphQL', 'formatError'],
+    // 'error_formatter' => ['\Rebing\GraphQL\GraphQL', 'formatError'],
+    'error_formatter' => ['App\GraphQL\Formatters\ErrorFormatter', 'formatError'],
+
 
     /*
      * Custom Error Handling

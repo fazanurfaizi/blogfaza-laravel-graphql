@@ -51,7 +51,8 @@ class Post extends Model
     }
 
     public function getImageUrlAttribute(){
-        return \Storage::disk('public')->url("images/$this->image");
+        return asset('storage/images/' . $this->image);
+        //return \Storage::disk('public')->url("images/$this->image");
     }
 
     public function imageUrl($width, $height){
