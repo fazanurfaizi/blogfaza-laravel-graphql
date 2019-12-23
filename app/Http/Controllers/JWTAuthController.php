@@ -1,9 +1,12 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+
 class JWTAuthController extends Controller
 {
     public function register(Request $request) {
@@ -28,9 +31,10 @@ class JWTAuthController extends Controller
             'data' => $user
         ], 200);
     }
+
     public function login(Request $request) {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|max:255|exists:users',
             'password' => 'required|string|min:8|max:255',
         ]);
         if($validator->fails()) {
@@ -44,6 +48,7 @@ class JWTAuthController extends Controller
         }
         return $this->respondWithToken($token);
     }
+
     protected function respondWithToken($token) {
         return response()->json([
             'access_token' => $token,
@@ -51,12 +56,15 @@ class JWTAuthController extends Controller
             'expires_in' => Auth::guard('api')->factory()->getTTL() * 60
         ]);
     }
+
     public function user() {
         return response()->json(Auth::guard('api')->user());
     }
+
     public function refresh() {
         return $this->respondWithToken(Auth::guard('api')->refresh());
     }
+    
     public function logout() {
         Auth::guard('api')->logout();
         return response()->json([

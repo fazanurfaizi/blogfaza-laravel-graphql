@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations\Category;
 
-use JWTAuth;
 use Closure;
 use GraphQL;
 use GraphQL\Error\Error;
@@ -13,24 +12,17 @@ use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Mutation;
 use Rebing\GraphQL\Support\SelectFields;
+use App\GraphQL\Traits\AuthorizationTrait;
 
 class EditCategory extends Mutation
 {
+
+    use AuthorizationTrait;
+
     protected $attributes = [
         'name' => 'editCategory',
         'description' => 'A mutation for edit category'
     ];
-
-    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
-    {
-        try {
-            $this->auth = JWTAuth::parseToken()->authenticate();
-        } catch (\Exception $e) {
-            $this->auth = null;
-        }
-        
-        return (boolean) $this->auth;
-    }
 
     public function type(): Type
     {

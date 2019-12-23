@@ -4,32 +4,24 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use JWTAuth;
 use Closure;
+use GraphQL;
+use App\Models\User;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
-use Rebing\GraphQL\Support\Facades\GraphQL;
-use App\Models\User;
+use App\GraphQL\Traits\AuthorizationTrait;
 
 class UsersPaginateQuery extends Query
 {
+
+    use AuthorizationTrait;
+
     protected $attributes = [
         'name' => 'usersPerPage',
         'description' => 'A query for paginate the user'
-    ];
-
-    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
-    {
-        try {
-            $this->auth = JWTAuth::parseToken()->authenticate();
-        } catch (\Exception $e) {
-            $this->auth = null;
-        }
-        
-        return (boolean) $this->auth;
-    }
+    ];    
 
     public function type(): Type
     {

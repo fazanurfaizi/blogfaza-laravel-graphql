@@ -5,31 +5,23 @@ declare(strict_types=1);
 namespace App\GraphQL\Queries;
 
 use Closure;
-use JWTAuth;
+use App\Models\User;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 use Rebing\GraphQL\Support\Facades\GraphQL;
-use App\Models\User;
+use App\GraphQL\Traits\AuthorizationTrait;
 
 class UserQuery extends Query
 {
+
+    use AuthorizationTrait;
+
     protected $attributes = [
         'name' => 'user',
         'description' => 'A query of user'
     ];    
-
-    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
-    {
-        try {
-            $this->auth = JWTAuth::parseToken()->authenticate();
-        } catch (\Exception $e) {
-            $this->auth = null;
-        }
-        
-        return (boolean) $this->auth;
-    }
 
     public function type(): Type
     {

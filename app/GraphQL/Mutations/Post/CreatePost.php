@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations\Post;
 
-use JWTAuth;
 use Closure;
 use GraphQL;
 use App\Models\Post;
@@ -17,24 +16,17 @@ use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Mutation;
 use Rebing\GraphQL\Support\SelectFields;
+use App\GraphQL\Traits\AuthorizationTrait;
 
 class CreatePost extends Mutation
 {
+
+    use AuthorizationTrait;
+
     protected $attributes = [
         'name' => 'createPost',
         'description' => 'A mutation for create a post'
     ];
-
-    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
-    {
-        try {
-            $this->auth = JWTAuth::parseToken()->authenticate();
-        } catch (\Exception $e) {
-            $this->auth = null;
-        }
-        
-        return (boolean) $this->auth;
-    }
 
     public function type(): Type
     {

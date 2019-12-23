@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations\Comment;
 
-use JWTAuth;
 use Closure;
 use GraphQL;
 use App\Models\Post;
@@ -15,24 +14,17 @@ use Rebing\GraphQL\Support\Mutation;
 use GraphQL\Type\Definition\ResolveInfo;
 use Rebing\GraphQL\Support\SelectFields;
 use GraphQL\Type\Definition\InputObjectType;
+use App\GraphQL\Traits\AuthorizationTrait;
 
 class CreateComment extends Mutation
 {
+
+    use AuthorizationTrait;
+
     protected $attributes = [
         'name' => 'createComment',
         'description' => 'A mutation for create comment'
-    ];
-
-    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
-    {
-        try {
-            $this->auth = JWTAuth::parseToken()->authenticate();
-        } catch (\Exception $e) {
-            $this->auth = null;
-        }
-        
-        return (boolean) $this->auth;
-    }
+    ];    
 
     public function type(): Type
     {
