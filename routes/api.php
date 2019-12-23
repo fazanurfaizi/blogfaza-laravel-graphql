@@ -16,6 +16,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('graphql/login', 'JWTAuthController@login');
-Route::post('graphql/logout', 'JWTAuthController@logout');
-Route::post('graphql/register', 'JWTAuthController@register');
+Route::post('login', 'JWTAuthController@login');
+Route::post('logout', 'JWTAuthController@logout');
+Route::post('register', 'JWTAuthController@register');

@@ -25,16 +25,16 @@ class CreatePost extends Mutation
         'description' => 'A mutation for create a post'
     ];
 
-    // public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
-    // {
-    //     try {
-    //         $this->auth = JWTAuth::parseToken()->authenticate();
-    //     } catch (\Exception $e) {
-    //         $this->auth = null;
-    //     }
+    public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
+    {
+        try {
+            $this->auth = JWTAuth::parseToken()->authenticate();
+        } catch (\Exception $e) {
+            $this->auth = null;
+        }
         
-    //     return (boolean) $this->auth;
-    // }
+        return (boolean) $this->auth;
+    }
 
     public function type(): Type
     {
