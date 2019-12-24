@@ -22,7 +22,7 @@ class EditComment extends Mutation
     use AuthorizationTrait;
 
     protected $attributes = [
-        'name' => 'ceditComment',
+        'name' => 'CeditComment',
         'description' => 'A mutation'
     ];
 

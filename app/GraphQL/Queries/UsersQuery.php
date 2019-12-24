@@ -15,6 +15,9 @@ use App\GraphQL\Traits\AuthorizationTrait;
 
 class UsersQuery extends Query
 {
+
+    use AuthorizationTrait;
+
     protected $attributes = [
         'name' => 'users',
         'description' => 'A query of users' 

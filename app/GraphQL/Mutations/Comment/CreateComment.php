@@ -22,7 +22,7 @@ class CreateComment extends Mutation
     use AuthorizationTrait;
 
     protected $attributes = [
-        'name' => 'createComment',
+        'name' => 'CreateComment',
         'description' => 'A mutation for create comment'
     ];    
 

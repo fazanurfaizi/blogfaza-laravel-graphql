@@ -26,7 +26,7 @@ class EditPost extends Mutation
     use AuthorizationTrait;
 
     protected $attributes = [
-        'name' => 'editPost',
+        'name' => 'EditPost',
         'description' => 'A mutation for edit a post'
     ];    
 

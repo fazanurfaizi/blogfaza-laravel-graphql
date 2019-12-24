@@ -121,27 +121,32 @@ return [
             ],
             'mutation' => [
                 // Auth
-                'login' => App\GraphQL\Mutations\Auth\LoginMutation::class,                    
+                'Login' => App\GraphQL\Mutations\Auth\LoginMutation::class,                    
+                'Register' => App\GraphQL\Mutations\Auth\RegisterMutation::class,
+                'RefreshToken' => App\GraphQL\Mutations\Auth\RefreshTokenMutation::class,
+                'DeleteUser' => App\GraphQL\Mutations\Auth\DeleteUserMutation::class,
+                'UpdateUserPassword' => App\GraphQL\Mutations\Auth\UpdateUserPasswordMutation::class,
+                'Logout' => App\GraphQL\Mutations\Auth\LogoutMutation::class, 
 
                 // Category
-                'createCategory' => App\GraphQL\Mutations\Category\CreateCategory::class,
-                'editCategory' => App\GraphQL\Mutations\Category\EditCategory::class,
-                'deleteCategory' => App\GraphQL\Mutations\Category\DeleteCategory::class,
+                'CreateCategory' => App\GraphQL\Mutations\Category\CreateCategory::class,
+                'EditCategory' => App\GraphQL\Mutations\Category\EditCategory::class,
+                'DeleteCategory' => App\GraphQL\Mutations\Category\DeleteCategory::class,
 
                 // Comment
-                'createComment' => App\GraphQL\Mutations\Comment\CreateComment::class,
-                'editComment' => App\GraphQL\Mutations\Comment\EditComment::class,
-                'deleteComment' => App\GraphQL\Mutations\Comment\DeleteComment::class,
+                'CreateComment' => App\GraphQL\Mutations\Comment\CreateComment::class,
+                'EditComment' => App\GraphQL\Mutations\Comment\EditComment::class,
+                'DeleteComment' => App\GraphQL\Mutations\Comment\DeleteComment::class,
 
                 // Post
-                'createPost' => App\GraphQL\Mutations\Post\CreatePost::class,
-                'editPost' => App\GraphQL\Mutations\Post\EditPost::class,
-                'deletePost' => App\GraphQL\Mutations\Post\DeletePost::class,
+                'CreatePost' => App\GraphQL\Mutations\Post\CreatePost::class,
+                'EditPost' => App\GraphQL\Mutations\Post\EditPost::class,
+                'DeletePost' => App\GraphQL\Mutations\Post\DeletePost::class,
 
                 // Tag
-                'createTag' => App\GraphQL\Mutations\Tag\CreateTag::class,
-                'editTag' => App\GraphQL\Mutations\Tag\EditTag::class,
-                'deleteTag' => App\GraphQL\Mutations\Tag\DeleteTag::class,                
+                'CreateTag' => App\GraphQL\Mutations\Tag\CreateTag::class,
+                'EditTag' => App\GraphQL\Mutations\Tag\EditTag::class,
+                'DeleteTag' => App\GraphQL\Mutations\Tag\DeleteTag::class,                
             ],
             'middleware' => [],
             'method' => ['get', 'post'],

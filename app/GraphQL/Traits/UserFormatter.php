@@ -7,14 +7,11 @@ use App\Models\User;
 
 trait UserFormatter
 {
-    /**
-     * @param string $token
-     * @param User $user
-     * @return Object
-     */
     public function parseUserAndTokenData(string $token, User $user): Object {
-        $tokenClass        = new stdClass();
+        $tokenClass = new stdClass();
         $tokenClass->token = $token;
+        $tokenClass->token_type = 'Bearer';
+        $tokenClass->expires_time = 604800;
         $tokenClass->user  = $user;
 
         return $tokenClass;

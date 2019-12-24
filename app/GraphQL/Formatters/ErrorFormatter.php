@@ -1,28 +1,55 @@
 <?php
 
 namespace App\GraphQL\Formatters;
+
 use GraphQL\Error\Error;
 use Rebing\GraphQL\Error\ValidationError;
+use Rebing\GraphQL\Error\AuthorizationError;
 
-class ErrorFormatter {
-    public static function formatError(Error $e)
+class ErrorFormatter
+{
+    public static function formatError(Error $exception): array
     {
+        $statusCode = (new ErrorFormatter)->getExceptionStatusCode($exception);
+
         $error = [
-            'message' => $e->getMessage()
+            'message' => $exception->getMessage(),
+            'code'    => $statusCode
         ];
-        $locations = $e->getLocations();
-        if (!empty($locations))
-        {
-            $error['locations'] = array_map(function($loc)
-            {
-                return $loc->toArray();
+        $locations = $exception->getLocations();
+
+        if (!empty($locations)) {
+            $error['locations'] = array_map(function ($location) {
+                return $location->toArray();
             }, $locations);
         }
-        $previous = $e->getPrevious();
-        if ($previous && $previous instanceof ValidationError)
-        {
+
+        $previous = $exception->getPrevious();
+        if ($previous && $previous instanceof ValidationError) {
             $error['validation'] = $previous->getValidatorMessages();
         }
+
         return $error;
+    }
+
+    private function getExceptionStatusCode(Error $exception)
+    {
+        $parsedException = $exception->getPrevious();
+
+        if ($parsedException === null) {
+            $parsedException = $exception;
+        }
+
+        if ($parsedException instanceof ValidationError) {
+            return 500;
+        }
+
+        if ($parsedException instanceof AuthorizationError) {
+            return 401;
+        }
+
+        return ($parsedException->getCode() !== 0 && $parsedException->getCode() !== '0')
+            ? $parsedException->getCode()
+            : 500;
     }
 }

@@ -24,7 +24,7 @@ class CreatePost extends Mutation
     use AuthorizationTrait;
 
     protected $attributes = [
-        'name' => 'createPost',
+        'name' => 'CreatePost',
         'description' => 'A mutation for create a post'
     ];
 

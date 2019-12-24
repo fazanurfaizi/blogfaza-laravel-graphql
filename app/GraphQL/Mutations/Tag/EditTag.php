@@ -20,7 +20,7 @@ class EditTag extends Mutation
     use AuthorizationTrait;
 
     protected $attributes = [
-        'name' => 'editTag',
+        'name' => 'EditTag',
         'description' => 'A mutation for edit a tag'
     ];
 

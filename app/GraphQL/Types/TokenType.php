@@ -22,6 +22,14 @@ class TokenType extends GraphQLType
                 'type' => Type::nonNull(Type::string()),
                 'description' => 'The access token of the user'
             ],
+            'token_type' => [
+                'type' => Type::string(),
+                'description' => 'The token tipe'
+            ],
+            'expires_time' => [
+                'type' => Type::int(),
+                'description' => 'The expires time of the token'
+            ],
             'user' => [
                 'type' => GraphQL::type('User'),
                 'description' => 'User Data'

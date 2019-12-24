@@ -19,7 +19,7 @@ class CreateCategory extends Mutation
     use AuthorizationTrait;
 
     protected $attributes = [
-        'name' => 'createCategory',
+        'name' => 'CreateCategory',
         'description' => 'A mutation for create Category'
     ];    
 

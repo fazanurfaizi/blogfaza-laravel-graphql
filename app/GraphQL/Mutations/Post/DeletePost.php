@@ -21,7 +21,7 @@ class DeletePost extends Mutation
     use AuthorizationTrait;
 
     protected $attributes = [
-        'name' => 'deletePost',
+        'name' => 'DeletePost',
         'description' => 'A mutation for delete post'
     ];    
 

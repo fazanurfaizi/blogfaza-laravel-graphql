@@ -9,24 +9,16 @@ use App\GraphQL\Mutations\BaseMutation;
 
 class LoginMutation extends BaseMutation
 {
-    /**
-     * @var array
-     */
+
     protected $attributes = [
-        'name' => 'login'
+        'name' => 'Login'
     ];
 
-    /**
-     * @return Type
-     */
     public function type(): Type
     {
         return GraphQL::type('Token');
     }
 
-    /**
-     * @return array
-     */
     public function args(): array
     {
         return [

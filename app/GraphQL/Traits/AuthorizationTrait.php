@@ -21,6 +21,8 @@ trait AuthorizationTrait {
             throw new Exception($exception->getMessage());            
         } catch (Exception $exception) {
             $this->auth = null;
+        } catch(AuthExpiredException $exception){
+            throw new AuthExpiredException($exception->getMessage());
         }
 
         return (boolean) $this->auth;

@@ -20,7 +20,7 @@ class EditCategory extends Mutation
     use AuthorizationTrait;
 
     protected $attributes = [
-        'name' => 'editCategory',
+        'name' => 'EditCategory',
         'description' => 'A mutation for edit category'
     ];
 

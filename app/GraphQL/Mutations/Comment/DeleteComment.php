@@ -22,7 +22,7 @@ class DeleteComment extends Mutation
     use AuthorizationTrait;
 
     protected $attributes = [
-        'name' => 'deleteComment',
+        'name' => 'DeleteComment',
         'description' => 'A mutation for delete a comment'
     ];
 

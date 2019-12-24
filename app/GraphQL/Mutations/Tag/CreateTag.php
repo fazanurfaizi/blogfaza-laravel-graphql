@@ -19,7 +19,7 @@ class CreateTag extends Mutation
     use AuthorizationTrait;
 
     protected $attributes = [
-        'name' => 'createTag',
+        'name' => 'CreateTag',
         'description' => 'A mutation for create tag query'
     ];    
 

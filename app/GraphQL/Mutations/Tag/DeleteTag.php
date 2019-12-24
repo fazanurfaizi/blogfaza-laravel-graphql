@@ -20,7 +20,7 @@ class DeleteTag extends Mutation
     use AuthorizationTrait;
 
     protected $attributes = [
-        'name' => 'deleteTag',
+        'name' => 'DeleteTag',
         'description' => 'A mutation for delete a tag'
     ];
 

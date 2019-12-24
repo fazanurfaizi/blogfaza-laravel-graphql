@@ -20,7 +20,7 @@ class DeleteCategory extends Mutation
     use AuthorizationTrait;
 
     protected $attributes = [
-        'name' => 'deleteCategory',
+        'name' => 'DeleteCategory',
         'description' => 'A mutation'
     ];
 
