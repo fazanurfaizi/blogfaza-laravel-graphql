@@ -170,6 +170,8 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Thomaswelton\LaravelGravatar\LaravelGravatarServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Madewithlove\Tactician\ServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
 
         /*
          * Application Service Providers...

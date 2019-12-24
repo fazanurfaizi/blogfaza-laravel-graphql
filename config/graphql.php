@@ -2,11 +2,6 @@
 
 declare(strict_types=1);
 
-use example\Mutation\ExampleMutation;
-use example\Query\ExampleQuery;
-use example\Type\ExampleRelationType;
-use example\Type\ExampleType;
-
 return [
 
     // The prefix for routes
@@ -125,6 +120,9 @@ return [
                 'PostsPaginate' => App\GraphQL\Queries\PostsPaginateQuery::class,                
             ],
             'mutation' => [
+                // Auth
+                'login' => App\GraphQL\Mutations\Auth\LoginMutation::class,                    
+
                 // Category
                 'createCategory' => App\GraphQL\Mutations\Category\CreateCategory::class,
                 'editCategory' => App\GraphQL\Mutations\Category\EditCategory::class,
@@ -143,7 +141,7 @@ return [
                 // Tag
                 'createTag' => App\GraphQL\Mutations\Tag\CreateTag::class,
                 'editTag' => App\GraphQL\Mutations\Tag\EditTag::class,
-                'deleteTag' => App\GraphQL\Mutations\Tag\DeleteTag::class,
+                'deleteTag' => App\GraphQL\Mutations\Tag\DeleteTag::class,                
             ],
             'middleware' => [],
             'method' => ['get', 'post'],
@@ -161,6 +159,7 @@ return [
     //
     'types' => [
         'User' => App\GraphQL\Types\UserType::class,
+        'Token' => App\GraphQL\Types\TokenType::class,
         'Tag' => App\GraphQL\Types\TagType::class,
         'Category' => App\GraphQL\Types\CategoryType::class,
         'Comment' => App\GraphQL\Types\CommentType::class,
