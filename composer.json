@@ -21,6 +21,7 @@
         "rebing/graphql-laravel": "^4.0",
         "thomaswelton/laravel-gravatar": "^1.2",
         "tymon/jwt-auth": "dev-develop",
+        "unisharp/laravel-filemanager": "~1.8",
         "webonyx/graphql-php": "^0.13.8"
     },
     "require-dev": {

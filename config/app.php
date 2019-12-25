@@ -172,6 +172,7 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Madewithlove\Tactician\ServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,        
 
         /*
          * Application Service Providers...
