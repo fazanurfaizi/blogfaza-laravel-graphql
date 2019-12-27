@@ -114,6 +114,10 @@ class EditPost extends Mutation
             return new Error("Sorry, User not found.");
         }
 
+        if($user->role_id !== 1){
+            return new Error('Only Admin who can edit this post');
+        }
+
         if($user->id !== $post->user_id){
             return new Error("Sorry, This post just only can edit by author.");
         }

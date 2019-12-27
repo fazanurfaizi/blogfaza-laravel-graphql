@@ -40,7 +40,11 @@ class UserType extends GraphQLType
                 'type' => Type::listOf(GraphQL::type('Post')),
                 'description' => 'the posts belonging to this user'
             ],
-            'avatar' => AvatarField::class
+            'avatar' => AvatarField::class,
+            'role' => [
+                'type' => GraphQL::type('Role'),
+                'description' => 'The Role of the user'
+            ]
         ];
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Presenters\UserPresenter;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laracasts\Presenter\PresentableTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -10,10 +12,12 @@ use Gravatar;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
+    use Notifiable, PresentableTrait;
+
+    protected $presenter = UserPresenter::class;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role_id'
     ];
 
     protected $hidden = [
@@ -43,4 +47,8 @@ class User extends Authenticatable implements JWTSubject
     public function posts(){
         return $this->hasMany(Post::class);
     }    
+
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
 }

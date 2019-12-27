@@ -4,9 +4,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreateUserRepositoriesTable.
+ * Class CreateRolesTable.
  */
-class CreateUserRepositoriesTable extends Migration
+class CreateRolesTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,7 +15,7 @@ class CreateUserRepositoriesTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('user_repositories', function(Blueprint $table) {
+		Schema::create('roles', function(Blueprint $table) {
             $table->increments('id');
 
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreateUserRepositoriesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('user_repositories');
+		Schema::drop('roles');
 	}
 }

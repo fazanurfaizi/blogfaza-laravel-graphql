@@ -101,6 +101,9 @@ return [
                 'users' => App\GraphQL\Queries\UsersQuery::class,
                 'usersPaginate' => App\GraphQL\Queries\UsersPaginateQuery::class,
 
+                // Role
+                'roles' => App\GraphQL\Queries\RolesQuery::class,
+
                 // Category
                 'categories' => App\GraphQL\Queries\CategoriesQuery::class,
                 'category' => App\GraphQL\Queries\CategoryQuery::class,
@@ -164,6 +167,7 @@ return [
     //
     'types' => [
         'User' => App\GraphQL\Types\UserType::class,
+        'Role' => App\GraphQL\Types\RoleType::class,
         'Token' => App\GraphQL\Types\TokenType::class,
         'Tag' => App\GraphQL\Types\TagType::class,
         'Category' => App\GraphQL\Types\CategoryType::class,

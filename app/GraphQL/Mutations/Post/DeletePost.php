@@ -63,6 +63,10 @@ class DeletePost extends Mutation
             return new Error('User Not Found');
         }        
 
+        if($user->role_id !== 1){
+            return new Error('Only Admin who can delete this post');
+        }
+
         if($user->id !== $post->user_id){
             return new Error('User Not Matches');
         }                    

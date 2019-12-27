@@ -6,11 +6,12 @@ namespace App\GraphQL\Mutations\Post;
 
 use Closure;
 use GraphQL;
+use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Tag;
-use Carbon\Carbon;
 use App\Models\Category;
+use GraphQL\Error\Error;
 use Rebing\GraphQL\Support\UploadType;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -21,7 +22,7 @@ use App\GraphQL\Traits\AuthorizationTrait;
 class CreatePost extends Mutation
 {
 
-    use AuthorizationTrait;
+    //use AuthorizationTrait;
 
     protected $attributes = [
         'name' => 'CreatePost',
@@ -104,26 +105,30 @@ class CreatePost extends Mutation
     }
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
-    {
-        $post = New Post();
+    {        
         $user = User::findOrFail($args['user_id']);
-        $post->fill($args);
-        $post->slug = str_slug($post->title);       
-        $post->user_id = $args['user_id'];
-        
-        $image = $args['image'];        
-        if($image){
-            $uploadedImage = $image;
-            $imageName = $post->slug . time() . '.' . $image->getClientOriginalExtension();
-            $destinationPath = public_path('/storage/images/');
-            $uploadedImage->move($destinationPath, $imageName);
-            $image->imagePath = $destinationPath . $imageName;
-            $post->image = $imageName;
-        }    
-        
-        $post->save();
-        $post->tags()->sync($args['tag_id']);
+        if($user->role_id == 1){
+            $post = New Post();
+            $post->fill($args);
+            $post->slug = str_slug($post->title);       
+            $post->user_id = $args['user_id'];
+                             
+            if(isset($args['image'])){
+                $image = $args['image'];
+                $uploadedImage = $image;
+                $imageName = $post->slug . time() . '.' . $image->getClientOriginalExtension();
+                $destinationPath = public_path('/storage/images/');
+                $uploadedImage->move($destinationPath, $imageName);
+                $image->imagePath = $destinationPath . $imageName;
+                $post->image = $imageName;
+            }    
+            
+            $post->save();
+            $post->tags()->sync($args['tag_id']);
 
-        return $post;
+            return $post;
+        } else {
+            return new Error('Only, Admin who can create a new post');
+        }
     }
 }

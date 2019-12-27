@@ -13,6 +13,7 @@ class TagsTableSeeder extends Seeder
     public function run()
     {
         $tags = [
+            'Default',
             'Web Development',
             'Laravel',
             'Code Igniter',

@@ -25,7 +25,7 @@ class CreatePostsTable extends Migration
             $table->unique('title'); 
             $table->text('description');
             $table->text('body');
-            $table->string('image');
+            $table->string('image')->nullable()->default('default.jpg');            
             $table->integer('views')->default(0);
             $table->timestamps();
         });
