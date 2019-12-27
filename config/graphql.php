@@ -151,7 +151,9 @@ return [
                 'EditTag' => App\GraphQL\Mutations\Tag\EditTag::class,
                 'DeleteTag' => App\GraphQL\Mutations\Tag\DeleteTag::class,                
             ],
-            'middleware' => [],
+            'middleware' => [
+                \Barryvdh\Cors\HandleCors::class,
+            ],
             'method' => ['get', 'post'],
         ],
     ],
