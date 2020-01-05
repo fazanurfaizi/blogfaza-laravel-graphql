@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations\Post;
 
+use JWTAuth;
 use Closure;
 use GraphQL;
 use Carbon\Carbon;
@@ -22,7 +23,7 @@ use App\GraphQL\Traits\AuthorizationTrait;
 class CreatePost extends Mutation
 {
 
-    //use AuthorizationTrait;
+    use AuthorizationTrait;
 
     protected $attributes = [
         'name' => 'CreatePost',
@@ -44,17 +45,17 @@ class CreatePost extends Mutation
                     'required',                    
                 ]
             ], 
-            'slug' => [
-                'name' => 'slug',
-                'type' => Type::string(),
-                'rules' => [
-                    'selectable' => false,
-                    'sometimes'
-                ],
-                'resolve' => function($root, $args){
-                    return str_slug($args['title']);
-                }
-            ],
+            // 'slug' => [
+            //     'name' => 'slug',
+            //     'type' => Type::string(),
+            //     'rules' => [
+            //         'selectable' => false,
+            //         'sometimes'
+            //     ],
+            //     'resolve' => function($root, $args){
+            //         return str_slug($args['title']);
+            //     }
+            // ],
             'description' => [
                 'name' => 'description',
                 'type' => Type::string(),
@@ -85,14 +86,6 @@ class CreatePost extends Mutation
                     'exists:categories,id'
                 ]                
             ],
-            'user_id' => [
-                'name' => 'user_id',
-                'type' => Type::nonNull(Type::int()),
-                'rules' => [
-                    'required',
-                    'exists:users,id'
-                ]
-            ],
             'tag_id' => [
                 'name' => 'tag_id',
                 'type' => Type::listOf(Type::int()),
@@ -106,12 +99,12 @@ class CreatePost extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {        
-        $user = User::findOrFail($args['user_id']);
+        $user = JWTAuth::parseToken()->authenticate();
         if($user->role_id == 1){
             $post = New Post();
             $post->fill($args);
             $post->slug = str_slug($post->title);       
-            $post->user_id = $args['user_id'];
+            $post->user_id = $user->id;
                              
             if(isset($args['image'])){
                 $image = $args['image'];

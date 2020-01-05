@@ -46,13 +46,6 @@ class EditPost extends Mutation
                     'numeric'
                 ]
             ],
-            'user_id' => [
-                'name' => 'user_id',
-                'type' => Type::nonNull(Type::int()),
-                'rules' => [
-                    'required'
-                ]
-            ],
             'title' => [
                 'name' => 'title',
                 'type' => Type::string(),
@@ -104,7 +97,7 @@ class EditPost extends Mutation
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
         $post = Post::find($args['id']);
-        $user = User::find($args['user_id']);
+        $user = JWTAuth::parseToken()->authenticate();
 
         if(!$post){
             return new Error("Sorry, Post not found.");

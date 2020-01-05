@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations\Comment;
 
+use JWTAuth;
 use Closure;
 use GraphQL;
 use GraphQL\Error\Error;
@@ -42,14 +43,6 @@ class EditComment extends Mutation
                     'numeric'
                 ]
             ],
-            'user_id' => [
-                'name' => 'user_id',
-                'type' => Type::nonNull(Type::int()),
-                'rules' => [
-                    'required',                 
-                    'exists:users,id'   
-                ]
-            ],
             'body' => [
                 'name' => 'body',
                 'type' => Type::nonNull(Type::string()),
@@ -70,7 +63,7 @@ class EditComment extends Mutation
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
         $comment = Comment::find($args['id']);
-        $user = User::find($args['user_id']);
+        $user = JWTAuth::parseToken()->authenticate();
 
         if(!$comment){
             return new Error('Sorry, Comment no found.');

@@ -8,6 +8,7 @@ use App\Contracts\CommandInterface;
 use App\Contracts\HandlerInterface;
 use App\Exceptions\HandlerException;
 use App\Exceptions\NotAuthorizedException;
+use GraphQL\Error\Error;
 use App\GraphQL\Traits\UserFormatter;
 
 class Login implements HandlerInterface
@@ -25,7 +26,7 @@ class Login implements HandlerInterface
             
             $user = auth()->user();
 
-            if (!$token) {
+            if (! $user) {
                 throw new NotAuthorizedException();
             }
 

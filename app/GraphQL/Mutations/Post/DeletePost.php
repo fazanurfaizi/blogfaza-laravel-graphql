@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations\Post;
 
+use JWTAuth;
 use Closure;
 use GraphQL;
 use App\Models\Post;
@@ -40,19 +41,12 @@ class DeletePost extends Mutation
                     'required'
                 ]
             ],
-            'user_id' => [
-                'name' => 'user_id',
-                'type' => Type::nonNull(Type::int()),
-                'rules' => [
-                    'required'
-                ]
-            ]
         ];
     }
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        $user = User::find($args['user_id']);
+        $user = JWTAuth::parseToken()->authenticate();
         $post = Post::find($args['id']);
 
         if(!$post){

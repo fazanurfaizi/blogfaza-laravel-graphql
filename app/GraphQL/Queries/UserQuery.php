@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
+use JWTAuth;
 use Closure;
 use App\Models\User;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -26,23 +27,7 @@ class UserQuery extends Query
     public function type(): Type
     {
         return GraphQL::type('User');
-    }
-
-    public function args(): array
-    {
-        return [
-            'id' => [
-                'name' => 'id',
-                'type' => Type::int(),
-                'rules' => [
-                    'required',
-                    'numeric',
-                    'min:1',
-                    'exists:users,id'
-                ]
-            ]
-        ];
-    }    
+    }  
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
@@ -50,7 +35,8 @@ class UserQuery extends Query
         $fields = $getSelectFields();
         $select = $fields->getSelect();
         $with = $fields->getRelations();
+        $user = JWTAuth::parseToken()->authenticate();       
 
-        return User::where('id', '=', $args['id'])->with($with)->select($select)->firstOrFail();
+        return User::where('id', '=', $user->id)->with($with)->select($select)->firstOrFail();
     }
 }

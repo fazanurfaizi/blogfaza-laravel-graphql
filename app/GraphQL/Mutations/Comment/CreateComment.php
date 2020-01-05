@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations\Comment;
 
+use JWTAuth;
 use Closure;
 use GraphQL;
 use App\Models\Post;
@@ -42,16 +43,7 @@ class CreateComment extends Mutation
                     'exists:posts,id',
                     'selectable' => false
                 ]
-            ],
-            'user_id' => [
-                'name' => 'user_id',
-                'type' => Type::int(),
-                'rules' => [
-                    'sometimes',
-                    'exists:users,id',
-                    'selectable' => false
-                ]
-            ],            
+            ],          
             'body' => [
                 'name' => 'body',
                 'type' => Type::nonNull(Type::string()),
@@ -67,6 +59,8 @@ class CreateComment extends Mutation
     {      
         $comment = new Comment();
         $comment->fill($args);
+        $user = JWTAuth::parseToken()->authenticate();
+        $comment->user_id = $user->id;
         
         $comment->save();
         return $comment;

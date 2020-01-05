@@ -41,19 +41,12 @@ class DeleteComment extends Mutation
                     'required'
                 ]
             ],
-            'user_id' => [
-                'name' => 'user_id',
-                'type' => Type::nonNull(Type::int()),
-                'rules' => [
-                    'required'
-                ]
-            ]
         ];
     }
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {   
-        $user = User::find($args['user_id']);
+        $user = JWTAuth::parseToken()->authenticate();
 
         if(!$user){
             return new Error('User Not Found');
